@@ -238,11 +238,13 @@ Deno.test("fsRoutes - middleware is scoped to each mount", async () => {
   setBuildCache(app, new MockBuildCache(fsFiles, "development"), "development");
   const server = new FakeServer(app.handler());
 
-  const res = await server.get("/");
-
-  expect(res.status).toEqual(200);
-  expect(await res.text()).toEqual("ok");
-  expect(calls).toEqual(1);
+  for (const path of ["/", "/a/foo", "/b/foo"]) {
+    calls = 0;
+    const res = await server.get(path);
+    expect(res.status).toEqual(200);
+    expect(await res.text()).toEqual("ok");
+    expect(calls).toEqual(1);
+  }
 });
 
 Deno.test("fsRoutes - nested middlewares", async () => {

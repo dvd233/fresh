@@ -277,8 +277,8 @@ function applyCommandsInner<State>(
         const { pattern, route, config } = cmd;
         const segment = getOrCreateSegment(
           root,
-          pattern,
-          cmd.includeLastSegment,
+          mergePath(basePath, pattern, true),
+          cmd.includeLastSegment || basePath !== "",
         );
         const fns = segmentToMiddlewares(segment);
 
