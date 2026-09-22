@@ -237,7 +237,7 @@ function applyCommandsInner<State>(
       case CommandType.Middleware: {
         const segment = getOrCreateSegment(
           root,
-          cmd.pattern,
+          mergePath(basePath, cmd.pattern, true),
           cmd.includeLastSegment,
         );
         segment.middlewares.push(...cmd.fns);
@@ -250,7 +250,7 @@ function applyCommandsInner<State>(
       case CommandType.Error: {
         const segment = getOrCreateSegment(
           root,
-          cmd.pattern,
+          mergePath(basePath, cmd.pattern, true),
           cmd.includeLastSegment,
         );
         segment.errorRoute = cmd.item;
@@ -263,7 +263,7 @@ function applyCommandsInner<State>(
       case CommandType.Layout: {
         const segment = getOrCreateSegment(
           root,
-          cmd.pattern,
+          mergePath(basePath, cmd.pattern, true),
           cmd.includeLastSegment,
         );
         segment.layout = {
